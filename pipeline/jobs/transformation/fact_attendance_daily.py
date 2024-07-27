@@ -1,9 +1,11 @@
 from pipeline.utils.whutils import load_warehouse_table
 from pipeline.utils.whutils import save_warehouse_table
+from pipeline.utils.monitor import log_job_call
 
 import pandas as pd
 
 
+@log_job_call(name='fact_attendance_daily')
 def run_job(
         course_attendance_path: str,
         dim_enrollment_schedule_path: str,

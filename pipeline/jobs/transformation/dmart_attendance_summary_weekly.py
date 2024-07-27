@@ -1,7 +1,9 @@
 from pipeline.utils.whutils import load_warehouse_table
 from pipeline.utils.whutils import save_warehouse_table
+from pipeline.utils.monitor import log_job_call
 
 
+@log_job_call(name='dmart_attendance_summary_weekly')
 def run_job(
         fact_attendance_weekly_path: str,
 

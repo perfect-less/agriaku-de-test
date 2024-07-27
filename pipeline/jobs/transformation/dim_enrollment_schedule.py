@@ -1,10 +1,12 @@
 from pipeline.utils.whutils import warehouse_to_system_path
 from pipeline.utils.whutils import load_warehouse_table
 from pipeline.utils.whutils import save_warehouse_table
+from pipeline.utils.monitor import log_job_call
 
 import pandas as pd
 
 
+@log_job_call(name='dim_enrollment_schedule')
 def run_job(
         stg_course_path: str,
         stg_schedule_path: str,

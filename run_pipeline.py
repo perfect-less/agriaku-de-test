@@ -12,7 +12,14 @@ import os
 import logging
 
 
+# Setup Logging
 logger = logging.getLogger()
+logFormatter = logging.Formatter("%(asctime)s [%(levelname)-5.5s] [%(filename)-23.23s]  %(message)s")
+fileHandler = logging.FileHandler(filename='pipeline_log.log')
+fileHandler.setFormatter(logFormatter)
+consoleHandler = logging.StreamHandler()
+consoleHandler.setFormatter(logFormatter)
+logging.basicConfig(level=logging.INFO, handlers=[fileHandler, consoleHandler])
 
 
 def run_pipeline_flows(raw_data_dir: str, export_data_dir: str):
@@ -87,6 +94,11 @@ def run_pipeline_flows(raw_data_dir: str, export_data_dir: str):
 
 
 def prepare_pipeline():
+    logger.info("loading configuration")
+    Config.parse('pipeline_conf.yml')
+    logger.info("running pipeline with the following config")
+    Config.print_attributes(logger)
+
     logger.info("preparing required directorie(s)")
     # make sure warehouse directory exists.
     if not os.path.isdir(Config.WAREHOUSE_PATH):
