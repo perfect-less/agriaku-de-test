@@ -70,13 +70,6 @@ def run_job(
             'ATTENDANCE_EXPECTED',
         ]]
 
-    # Calculate percentage
-    fact_attendance_weekly_df['ATTENDANCE_PCT'] = (
-        100 *
-        fact_attendance_weekly_df['ATTENDANCE_SUM'] /
-        fact_attendance_weekly_df['ATTENDANCE_EXPECTED']
-        )
-
     # Save table
     target_path = save_warehouse_table(
             fact_attendance_weekly_df,
