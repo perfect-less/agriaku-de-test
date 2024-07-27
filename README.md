@@ -14,7 +14,12 @@ $ cd agriaku-de-test
 $ python3 -m venv venv
 ```
 
-3. Install dependencies using `pip`
+3. Activate the newly created virtual environment.
+```bash
+$ source venv/bin/activate
+```
+
+5. Install dependencies using `pip`
 ```bash
 $ pip3 install -r requirements.txt
 ```
