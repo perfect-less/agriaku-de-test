@@ -1,7 +1,9 @@
 # AgriAku Data Engineer Test Answer
 This repository contains my answer for AgriAku Data Engineer application test.
 
-# Setup
+# Setup and running on host machine
+
+## Preparing the environment
 
 1. Clone this repository to your local machine and `cd` into it.
 ```bash
@@ -25,11 +27,132 @@ $ pip3 install -r requirements.txt
 ```
 
 
-# Run
+## Input dataset
+
+Input dataset should be put in `raw-data` directory in the root of the cloned repository. You can adjust the source data path in `pipeline_conf.yml` if you want to ingest data from somewhere else. But by default, the pipeline will expect to find the data inside `raw-data/`. The project structure should look like this.
+```bash
+.
+├── raw-data
+│   ├── course_attendance.csv
+│   ├── course.csv
+│   ├── enrollment.csv
+│   └── schedule.csv
+├── docker/
+├── pipeline/
+├── venv/
+├── pipeline_conf.yml
+├── README.md
+├── LICENSE
+├── requirements.txt
+└── run_pipeline.py
+```
+
+
+## Running the pipeline
 
 Please make sure that you are inside the repository and have already activate the environment before running the pipeline. Setup and installation step can be found above.
 
 To run the pipeline just use the following command.
 ```bash
 $ python3 run_pipeline.py
+```
+
+The warehouse tables can be found inside `warehouse/` directory while the final csv can be found inside `extracted-data/`
+```bash
+.
+├── raw-data
+│   ├── course_attendance.csv
+│   ├── course.csv
+│   ├── enrollment.csv
+│   └── schedule.csv
+├── docker/
+├── pipeline/
+├── venv/
+├── pipeline_conf.yml
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── run_pipeline.py
+├── exported-data
+│   └── dmart_attendance_summary_weekly.csv
+└── warehouse
+    ├── datamart
+    │   ├── dim_enrollment_schedule.parquet
+    │   ├── dmart_attendance_summary_weekly.parquet
+    │   ├── fact_attendance_daily.parquet
+    │   └── fact_attendance_weekly.parquet
+    └── staging
+        ├── stg_course_attendance.parquet
+        ├── stg_course.parquet
+        ├── stg_enrollment.parquet
+        └── stg_schedule.parquet
+```
+
+
+# Running in docker
+
+Before running with docker, please make sure that the datasets is inside `raw-data/` directory like in the following directory tree.
+```bash
+.
+├── raw-data
+│   ├── course_attendance.csv
+│   ├── course.csv
+│   ├── enrollment.csv
+│   └── schedule.csv
+├── docker/
+├── pipeline/
+├── venv/
+├── pipeline_conf.yml
+├── README.md
+├── LICENSE
+├── requirements.txt
+└── run_pipeline.py
+```
+Unlike with running the pipeline in host, when running with the docker scripts, it will expect the source datasets to be located in `raw-data/` directory. 
+
+The next part is to build the image. Please make sure that you are in the root of the repository. This step is very simple and can be done using already prepared script.
+```bash
+$ ./docker/build-docker.sh
+```
+
+To run the pipeline, just use the run script.
+```bash
+$ ./docker/run-docker.sh
+```
+
+You should be able to found the results inside `docker_volume/` directory that have been created by the run script.
+```bash
+.
+├── raw-data
+│   ├── course_attendance.csv
+│   ├── course.csv
+│   ├── enrollment.csv
+│   └── schedule.csv
+├── docker_volume
+│   ├── exported-data
+│   │   └── dmart_attendance_summary_weekly.csv
+│   ├── raw-data
+│   │   ├── course_attendance.csv
+│   │   ├── course.csv
+│   │   ├── enrollment.csv
+│   │   └── schedule.csv
+│   └── warehouse
+│       ├── datamart
+│       │   ├── dim_enrollment_schedule.parquet
+│       │   ├── dmart_attendance_summary_weekly.parquet
+│       │   ├── fact_attendance_daily.parquet
+│       │   └── fact_attendance_weekly.parquet
+│       └── staging
+│           ├── stg_course_attendance.parquet
+│           ├── stg_course.parquet
+│           ├── stg_enrollment.parquet
+│           └── stg_schedule.parquet
+├── docker/
+├── pipeline/
+├── venv/
+├── pipeline_conf.yml
+├── README.md
+├── LICENSE
+├── requirements.txt
+└── run_pipeline.py
 ```
