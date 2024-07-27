@@ -1,0 +1,29 @@
+# Configuration File for this ETL pipeline
+#
+
+# warehouse path
+# this can be relative or absolute path, for example:
+#   relative path: 'warehouse/'
+#   absolute path: '/data/warehouse/'
+# default value: "warehouse/"
+warehouse_path: "warehouse/"
+
+
+# raw data path path
+# this can be relative or absolute path, for example:
+#   relative path: 'raw-data/'
+#   absolute path: '/data/raw-data/'
+# default value: "raw-data/"
+raw_data_path: "raw-data/"
+
+# export data path path
+# this can be relative or absolute path, for example:
+#   relative path: 'export-data/'
+#   absolute path: '/data/export-data//'
+# default value: "export-data/"
+export_data_path: "exported-data/"
+
+
+
+
+
