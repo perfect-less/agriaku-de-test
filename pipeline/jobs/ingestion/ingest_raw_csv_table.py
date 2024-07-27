@@ -1,5 +1,6 @@
 from pipeline.utils.config import Config
 from pipeline.utils.whutils import warehouse_to_system_path
+from pipeline.utils.whutils import save_warehouse_table
 
 import pandas as pd
 
@@ -15,10 +16,6 @@ def run_job(
     # Write into warehouse
     # we will write warehouse tables as parquet files.
     # we will overwrite whatever files that have been there before.
-    target_path = warehouse_to_system_path(
-            table_warehouse_path,
-            suffix='.parquet'
-            )
-    df.to_parquet(target_path)
+    target_path = save_warehouse_table(df, table_warehouse_path)
 
     return target_path

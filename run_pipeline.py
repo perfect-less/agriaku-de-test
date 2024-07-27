@@ -4,6 +4,7 @@ from pipeline.jobs.export import export_table_to_csv
 from pipeline.jobs.transformation import dim_enrollment_schedule
 from pipeline.jobs.transformation import fact_attendance_daily
 from pipeline.jobs.transformation import fact_attendance_weekly
+from pipeline.jobs.transformation import dmart_attendance_summary_weekly
 
 from pipeline.utils.config import Config
 
@@ -58,22 +59,30 @@ def run_pipeline_flows(raw_data_dir: str, export_data_dir: str):
     fact_attendance_daily_path = "datamart/fact_attendance_daily"
     fact_attendance_daily.run_job(
             "staging/stg_course_attendance",
-            "datamart/stg_schedule",
+            dim_enrollment_schedule_path,
 
             fact_attendance_daily_path,
             )
 
     fact_attendance_weekly_path = "datamart/fact_attendance_weekly"
     fact_attendance_weekly.run_job(
-            fact_attendance_daily,
+            fact_attendance_daily_path,
 
             fact_attendance_weekly_path,
             )
 
+
+    dmart_attendance_summary_weekly_path = "datamart/dmart_attendance_summary_weekly"
+    dmart_attendance_summary_weekly.run_job(
+            fact_attendance_weekly_path,
+
+            dmart_attendance_summary_weekly_path,
+            )
+
     # EXPORTS
     export_table_to_csv.run_job(
-            "datamart/dmart_attendance_weekly",
-            os.path.join(export_data_dir, "dmart_attendance_weekly.csv")
+            "datamart/dmart_attendance_summary_weekly",
+            os.path.join(export_data_dir, "dmart_attendance_summary_weekly.csv")
             )
 
 
@@ -82,6 +91,9 @@ def prepare_pipeline():
     # make sure warehouse directory exists.
     if not os.path.isdir(Config.WAREHOUSE_PATH):
         os.makedirs(Config.WAREHOUSE_PATH)
+    # make sure export directory exists.
+    if not os.path.isdir(Config.EXPORT_DATA_PATH):
+        os.makedirs(Config.EXPORT_DATA_PATH)
 
 
 if __name__ == "__main__":

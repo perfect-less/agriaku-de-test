@@ -1,3 +1,4 @@
+from pipeline.utils.whutils import load_warehouse_table
 
 
 def run_job(
@@ -5,4 +6,10 @@ def run_job(
 
         table_export_path: str
         ) -> str:
-    pass
+    # Load table
+    df = load_warehouse_table(table_warehouse_path)
+
+    # Export table as csv, with ';' separator
+    df.to_csv(table_export_path, sep=';', index=False)
+
+    return table_export_path
