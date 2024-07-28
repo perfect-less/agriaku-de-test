@@ -32,6 +32,12 @@ def run_job(
         analytics_attendance_summary_weekly_df['ATTENDANCE_SUM'] /
         analytics_attendance_summary_weekly_df['ATTENDANCE_EXPECTED']
         )
+    analytics_attendance_summary_weekly_df = analytics_attendance_summary_weekly_df[[
+            'SEMESTER_ID',
+            'WEEK_ID',
+            'COURSE_NAME',
+            'ATTENDANCE_PCT',
+        ]]
 
     target_path = save_warehouse_table(
             analytics_attendance_summary_weekly_df,
