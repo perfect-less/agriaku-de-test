@@ -106,10 +106,21 @@ def run_pipeline_flows(raw_data_dir: str, export_data_dir: str):
             )
 
     # EXPORTS
-    export_table_to_csv.run_job(
+    table_to_exports = [
+            dim_course_path,
+            dim_schedule_path,
+            dim_enrollment_path,
+            fact_attendance_daily_path,
+            analytics_attendance_weekly_path,
             analytics_attendance_summary_weekly_path,
-            os.path.join(export_data_dir, "analytics_attendance_summary_weekly.csv")
-            )
+            ]
+    for table_path in table_to_exports:
+        base_name = os.path.basename(table_path) + '.csv'
+        target_path = os.path.join(export_data_dir, base_name)
+
+        export_table_to_csv.run_job(
+                table_path, target_path
+                )
 
 
 def prepare_pipeline():
