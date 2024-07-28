@@ -6,6 +6,13 @@ This repository contains my answer for AgriAku Data Engineer application test.
 
 # Setup and running on host machine
 
+Tested on:
+```
+MANJARO LINUX 6.1.99-1
+Python 3.12.4
+pip 24.0 from
+```
+
 ## Preparing the environment
 
 1. Clone this repository to your local machine and `cd` into it.
