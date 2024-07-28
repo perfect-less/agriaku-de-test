@@ -1,4 +1,7 @@
 # AgriAku Data Engineer Test Answer
+
+![Pipeline design](docs/ETL-design.png)
+
 This repository contains my answer for AgriAku Data Engineer application test.
 
 # Setup and running on host machine
@@ -74,18 +77,27 @@ The warehouse tables can be found inside `warehouse/` directory while the final 
 ├── requirements.txt
 ├── run_pipeline.py
 ├── exported-data
-│   └── dmart_attendance_summary_weekly.csv
+│   ├── analytics_attendance_summary_weekly.csv
+│   ├── analytics_attendance_weekly.csv
+│   ├── dim_course.csv
+│   ├── dim_enrollment.csv
+│   ├── dim_schedule.csv
+│   └── fact_attendance_daily.csv
 └── warehouse
+    ├── analytics
+    │   ├── analytics_attendance_summary_weekly.parquet
+    │   └── analytics_attendance_weekly.parquet
     ├── datamart
-    │   ├── dim_enrollment_schedule.parquet
-    │   ├── dmart_attendance_summary_weekly.parquet
-    │   ├── fact_attendance_daily.parquet
-    │   └── fact_attendance_weekly.parquet
+    │   ├── dim_course.parquet
+    │   ├── dim_enrollment.parquet
+    │   ├── dim_schedule.parquet
+    │   └── fact_attendance_daily.parquet
     └── staging
         ├── stg_course_attendance.parquet
         ├── stg_course.parquet
         ├── stg_enrollment.parquet
         └── stg_schedule.parquet
+
 ```
 
 
@@ -128,25 +140,33 @@ You should be able to found the results inside `docker_volume/` directory that h
 │   ├── course.csv
 │   ├── enrollment.csv
 │   └── schedule.csv
-├── docker_volume
-│   ├── exported-data
-│   │   └── dmart_attendance_summary_weekly.csv
-│   ├── raw-data
-│   │   ├── course_attendance.csv
-│   │   ├── course.csv
-│   │   ├── enrollment.csv
-│   │   └── schedule.csv
-│   └── warehouse
-│       ├── datamart
-│       │   ├── dim_enrollment_schedule.parquet
-│       │   ├── dmart_attendance_summary_weekly.parquet
-│       │   ├── fact_attendance_daily.parquet
-│       │   └── fact_attendance_weekly.parquet
-│       └── staging
-│           ├── stg_course_attendance.parquet
-│           ├── stg_course.parquet
-│           ├── stg_enrollment.parquet
-│           └── stg_schedule.parquet
+docker_volume/
+├── exported-data
+│   ├── analytics_attendance_summary_weekly.csv
+│   ├── analytics_attendance_weekly.csv
+│   ├── dim_course.csv
+│   ├── dim_enrollment.csv
+│   ├── dim_schedule.csv
+│   └── fact_attendance_daily.csv
+├── raw-data
+│   ├── course_attendance.csv
+│   ├── course.csv
+│   ├── enrollment.csv
+│   └── schedule.csv
+└── warehouse
+    ├── analytics
+    │   ├── analytics_attendance_summary_weekly.parquet
+    │   └── analytics_attendance_weekly.parquet
+    ├── datamart
+    │   ├── dim_course.parquet
+    │   ├── dim_enrollment.parquet
+    │   ├── dim_schedule.parquet
+    │   └── fact_attendance_daily.parquet
+    └── staging
+        ├── stg_course_attendance.parquet
+        ├── stg_course.parquet
+        ├── stg_enrollment.parquet
+        └── stg_schedule.parquet
 ├── docker/
 ├── pipeline/
 ├── venv/
